@@ -14,6 +14,8 @@ import org.apache.flink.util.Collector;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -94,8 +96,9 @@ public class OnlineRetail2 {
 
         System.out.println("csvInput.count=" + csvInput.count());
         List<Tuple2<String, String>> list = csvInput.collect();
-        System.out.println("csvInput firstline=" + list.get(0));
-        System.out.println("csvInput secondline=" + list.get(1));
+
+       // System.out.println("csvInput firstline=" + list.get(0));
+       // System.out.println("csvInput secondline=" + list.get(1));
 
      /*
       * We have created a Flink dataset from the input OnlineRetail with the
@@ -133,13 +136,29 @@ public class OnlineRetail2 {
                 .withBroadcastSet(itemsSet, "itemSet");
         List<List<String>> ll = transactionList2.collect();
         Path csvFileOut = Paths.get("./OnlineRetail/test.csv");
-        try (BufferedWriter writer = Files.newBufferedWriter(csvFileOut, StandardCharsets.UTF_8, StandardOpenOption.WRITE)) {
+        StringBuilder sb = new StringBuilder();
+
+        for (List<String> ls : ll) {
+            String listString = ls.toString();
+            sb.append(listString.substring(1, listString.length()-1));
+            sb.append("\n");
+        }
+        try{
+            PrintWriter writer = new PrintWriter("output.csv", "UTF-8");
+            writer.println(sb.toString().replace(",", ""));
+            writer.close();
+        } catch (IOException e) {
+        }
+        /*try (BufferedWriter writer = Files.newBufferedWriter(csvFileOut, StandardCharsets.UTF_8, StandardOpenOption.WRITE)) {
             for (List<String> ls : ll) {
                 for (String s : ls)
-                    writer.write(s + " ");
-                writer.newLine();
+                    sb.append(s).append(" ");
+                    sb.
+                    sb.append("\n");
+                    writer.write(sb.toString());
             }
-        }
+        }*/
+
         //transactionList2.writeAsText("./OnlineRetail/test.csv.txt");
         // transactionList2.print();
         System.out.println("\n****** Number of transactions2:" + transactionList2.count());

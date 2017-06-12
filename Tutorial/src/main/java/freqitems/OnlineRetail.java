@@ -306,7 +306,7 @@ public class OnlineRetail {
 				if (itemSetMap.containsKey(trans.f1))
 					list_items.add(new Tuple2<Integer, String>(itemSetMap
 							.get(trans.f1), trans.f0));
-				System.out.println("Look at here " + trans.f0 + " " + trans.f1 + " ");
+				//System.out.println("Look at here " + trans.f0 + " " + trans.f1 + " ");
 			}
 
 			// After the mapping process we create the final list of integer,
