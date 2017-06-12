@@ -1,0 +1,15 @@
+/target/
+/bin/
+
+*.class
+
+#IDEA
+.idea/
+*.iml
+
+#Maven
+target/
+
+#Eclipse
+.classpath
+.settings
