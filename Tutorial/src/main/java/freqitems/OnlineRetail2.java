@@ -405,7 +405,7 @@ public class OnlineRetail2 {
             // System.out.println("f0: "+ value.f0+ "f1: "+ value.f1+"f2: "+ value.f2);
             if (value.f0 != null && value.f0 != "")
                 if (value.f1 != null && value.f1 != "")
-                    if (value.f1.matches("[0-9:]+"))
+                  //  if (value.f1.matches("[0-9:]+"))
                         return true;
             return false;
         }
